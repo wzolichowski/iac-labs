@@ -37,6 +37,7 @@ jobs:
         path: /home/runner/work/iac-labs/iac-labs/example-app/.venv
         key: ${{ runner.os }}-venv
   lint:
+    needs: build
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -54,12 +55,13 @@ jobs:
       id: cached-poetry-dependecies
       uses: actions/cache@v3
       with:
-        path: /home/runner/work//home/runner/work/iac-labs/iac-labs/example-app/.venv
+        path: /home/runner/work/iac-labs/iac-labs/example-app/.venv
         key: ${{ runner.os }}-venv
     - name: Lint
       run:  poetry run test lint
   formatter:
     runs-on: ubuntu-latest
+    needs: build
     defaults:
       run:
         working-directory: ./example-app
@@ -76,34 +78,12 @@ jobs:
       id: cached-poetry-dependecies
       uses: actions/cache@v3
       with:
-        path: /home/runner/work//home/runner/work/iac-labs/iac-labs/example-app/.venv
+        path: /home/runner/work/iac-labs/iac-labs/example-app/.venv
         key: ${{ runner.os }}-venv
     - name: Formatter
       run: poetry run task formatter
- 
-  test:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./example-app
-
-    steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python 3.11
-      uses: actions/setup-python@v3
-      with:
-        python-version: "3.11"
-    - name: Install Poetry
-      uses: snok/install-poetry@v1
-    - name: Recover build venv
-      id: cached-poetry-dependecies
-      uses: actions/cache@v3
-      with:
-        path: /home/runner/work//home/runner/work/iac-labs/iac-labs/example-app/.venv
-        key: ${{ runner.os }}-venvv
-    - name: Test
-      run: poetry run task test
   sec_test:
+    needs: build
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -121,12 +101,13 @@ jobs:
       id: cached-poetry-dependecies
       uses: actions/cache@v3
       with:
-        path: /home/runner/work//home/runner/work/iac-labs/iac-labs/example-app/.venv
+        path: /home/runner/work/iac-labs/iac-labs/example-app/.venv
         key: ${{ runner.os }}-venv
     - name: Sec Test
       run : |
         poetry run test security
-  pytest:
+  test:
+    needs: [sec_test, lint, formatter]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -144,7 +125,7 @@ jobs:
       id: cached-poetry-dependecies
       uses: actions/cache@v3
       with:
-        path: /home/runner/work//home/runner/work/iac-labs/iac-labs/example-app/.venv
+        path: /home/runner/work/iac-labs/iac-labs/example-app/.venv
         key: ${{ runner.os }}-venv  
     - name: Test with pytest
       run: |
