@@ -45,7 +45,7 @@ jobs:
       id: cached-poetry-dependencies
       uses: actions/cache@v3
       with:
-        path: /home/runner/work//home/runner/work/iac-labs/iac-labs/example-app/.venv/example-app/.venv
+        path: /home/runner/work//home/runner/work/iac-labs/iac-labs/example-app/.venv
         key: ${{ runner.os }}-venv
     - name: Lint
       run : |
