@@ -106,7 +106,7 @@ jobs:
         key: ${{ runner.os }}--venv
     - name: Test
       run : |
-        poetry run task test
+        poetry run test test
           build:
   sec_test:
     runs-on: ubuntu-latest
@@ -132,7 +132,7 @@ jobs:
         key: ${{ runner.os }}--venv
     - name: Sec Test
       run : |
-        poetry run task security
+        poetry run test security
         
         build:
   pytest:
