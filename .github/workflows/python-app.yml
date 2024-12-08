@@ -57,8 +57,7 @@ jobs:
         path: /home/runner/work//home/runner/work/iac-labs/iac-labs/example-app/.venv
         key: ${{ runner.os }}-venv
     - name: Lint
-      run : |
-        poetry run test lint
+      run:  poetry run test lint
   formatter:
     runs-on: ubuntu-latest
     defaults:
@@ -80,8 +79,8 @@ jobs:
         path: /home/runner/work//home/runner/work/iac-labs/iac-labs/example-app/.venv
         key: ${{ runner.os }}-venv
     - name: Formatter
-      run: |
-        poetry run test formatter     
+      run: poetry run task formatter
+ 
   test:
     runs-on: ubuntu-latest
     defaults:
@@ -103,9 +102,7 @@ jobs:
         path: /home/runner/work//home/runner/work/iac-labs/iac-labs/example-app/.venv
         key: ${{ runner.os }}-venvv
     - name: Test
-      run : |
-        poetry run test
-          build:
+      run: poetry run task test
   sec_test:
     runs-on: ubuntu-latest
     defaults:
@@ -129,8 +126,6 @@ jobs:
     - name: Sec Test
       run : |
         poetry run test security
-        
-        build:
   pytest:
     runs-on: ubuntu-latest
     defaults:
@@ -153,4 +148,4 @@ jobs:
         key: ${{ runner.os }}-venv  
     - name: Test with pytest
       run: |
-        poetry run test pytest
+        poetry run test test
