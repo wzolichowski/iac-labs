@@ -53,7 +53,7 @@ jobs:
         poetry run task test
     - name: Sec Test
       run : |
-        poetry run task task security
+        poetry run task security
         
         
     - name: Test with pytest
