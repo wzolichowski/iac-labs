@@ -73,12 +73,12 @@ jobs:
         python-version: "3.11"
     - name: Install Poetry
       uses: snok/install-poetry@v1
-    - name: Cache build venv
+    - name: Recover build venv
       id: cached-poetry-dependecies
       uses: actions/cache@v3
       with:
         path: /home/runner/work//home/runner/work/iac-labs/iac-labs/example-app/.venv
-        key: ${{ runner.os }}--venv
+        key: ${{ runner.os }}-venv
     - name: Formatter
       run: |
         poetry run task formatter     
