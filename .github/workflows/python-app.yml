@@ -41,7 +41,7 @@ jobs:
       uses: snok/install-poetry@v1
     - name: Install deps
       run: poetry install --no-root
-    - name: Recover cached deps
+    - name: Cache build venv
       id: cached-poetry-dependencies
       uses: actions/cache@v3
       with:
