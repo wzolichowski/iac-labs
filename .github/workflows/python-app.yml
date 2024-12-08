@@ -81,7 +81,7 @@ jobs:
         key: ${{ runner.os }}-venv
     - name: Formatter
       run: |
-        poetry run task formatter     
+        poetry run test formatter     
   test:
     runs-on: ubuntu-latest
     defaults:
