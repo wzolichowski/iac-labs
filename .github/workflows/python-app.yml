@@ -47,7 +47,7 @@ jobs:
         poetry run test lint
     - name: Formatter
       run : |
-        poetry run task Formatter
+        poetry run task formatter
     - name: Test
       run : |
         poetry run task test
