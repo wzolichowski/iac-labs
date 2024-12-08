@@ -104,7 +104,7 @@ jobs:
         key: ${{ runner.os }}-venvv
     - name: Test
       run : |
-        poetry run test test
+        poetry run test
           build:
   sec_test:
     runs-on: ubuntu-latest
