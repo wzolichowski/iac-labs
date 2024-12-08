@@ -39,6 +39,21 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Install Poetry
       uses: snok/install-poetry@v1
+      
+    - name: Lint
+      run : |
+        poetry run test lint
+    - name: Formatter
+      run : |
+        poetry run task Formatter
+    - name: Test
+      run : |
+        poetry run task test
+    - name: Sec Test
+      run : |
+        poetry run task task security
+        
+        
     - name: Test with pytest
       run: |
         pytest
