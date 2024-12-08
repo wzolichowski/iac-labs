@@ -96,14 +96,12 @@ jobs:
         python-version: "3.11"
     - name: Install Poetry
       uses: snok/install-poetry@v1
-    - name: Install deps
-      run: poetry install --no-root
-    - name: Cache build venv
+    - name: Recover build venv
       id: cached-poetry-dependecies
       uses: actions/cache@v3
       with:
         path: /home/runner/work//home/runner/work/iac-labs/iac-labs/example-app/.venv
-        key: ${{ runner.os }}--venv
+        key: ${{ runner.os }}-venvv
     - name: Test
       run : |
         poetry run test test
@@ -122,14 +120,12 @@ jobs:
         python-version: "3.11"
     - name: Install Poetry
       uses: snok/install-poetry@v1
-    - name: Install deps
-      run: poetry install --no-root
-    - name: Cache build venv
+    - name: Recover build venv
       id: cached-poetry-dependecies
       uses: actions/cache@v3
       with:
         path: /home/runner/work//home/runner/work/iac-labs/iac-labs/example-app/.venv
-        key: ${{ runner.os }}--venv
+        key: ${{ runner.os }}-venv
     - name: Sec Test
       run : |
         poetry run test security
@@ -149,14 +145,12 @@ jobs:
         python-version: "3.11"
     - name: Install Poetry
       uses: snok/install-poetry@v1
-    - name: Install deps
-      run: poetry install --no-root
-    - name: Cache build venv
+    - name: Recover build venv
       id: cached-poetry-dependecies
       uses: actions/cache@v3
       with:
         path: /home/runner/work//home/runner/work/iac-labs/iac-labs/example-app/.venv
-        key: ${{ runner.os }}--venv  
+        key: ${{ runner.os }}-venv  
     - name: Test with pytest
       run: |
         pytest
