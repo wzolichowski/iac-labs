@@ -37,8 +37,10 @@ jobs:
       id: cached-poetry-dependecies
       uses: actions/cache@v3
       with:
-        path: /home/runner/work/iac-labs/iac-labs/example-app/.venv
-        key: ${{ runner.os }}-venv
+        path: |
+          ${{ runner.os == 'Windows' && 'C:\\Users\\runneradmin\\AppData\\Local\\pypoetry\\Cache\\virtualenvs' || '/home/runner/work/iac-labs/iac-labs/example-app/.venv' }}
+          key: ${{ runner.os }}-venv
+
 
   lint:
     needs: build
