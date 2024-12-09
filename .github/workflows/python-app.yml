@@ -22,12 +22,6 @@ jobs:
       run:
         shell: bash
         working-directory: ./example-app
-  lint:
-    needs: build
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./example-app
 
     steps:
     - uses: actions/checkout@v4
@@ -37,19 +31,24 @@ jobs:
         python-version: "3.11"
     - name: Install Poetry
       uses: snok/install-poetry@v1
-    - name: Recover build venv
+    - name: Install deps
+      run: poetry install --no-root
+    - name: Cache build venv
       id: cached-poetry-dependecies
       uses: actions/cache@v3
       with:
         path: /home/runner/work/iac-labs/iac-labs/example-app/.venv
         key: ${{ runner.os }}-venv
-    - name: Lint
-      run:  poetry run test lint
-  formatter:
-    runs-on: ubuntu-latest
+
+  lint:
     needs: build
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     defaults:
       run:
+        shell: bash
         working-directory: ./example-app
 
     steps:
@@ -61,18 +60,49 @@ jobs:
     - name: Install Poetry
       uses: snok/install-poetry@v1
     - name: Recover build venv
-      id: cached-poetry-dependecies
+      uses: actions/cache@v3
+      with:
+        path: /home/runner/work/iac-labs/iac-labs/example-app/.venv
+        key: ${{ runner.os }}-venv
+    - name: Lint
+      run: poetry run test lint
+
+  formatter:
+    needs: build
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./example-app
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.11"
+    - name: Install Poetry
+      uses: snok/install-poetry@v1
+    - name: Recover build venv
       uses: actions/cache@v3
       with:
         path: /home/runner/work/iac-labs/iac-labs/example-app/.venv
         key: ${{ runner.os }}-venv
     - name: Formatter
       run: poetry run task formatter
+
   sec_test:
     needs: build
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     defaults:
       run:
+        shell: bash
         working-directory: ./example-app
 
     steps:
@@ -84,19 +114,22 @@ jobs:
     - name: Install Poetry
       uses: snok/install-poetry@v1
     - name: Recover build venv
-      id: cached-poetry-dependecies
       uses: actions/cache@v3
       with:
         path: /home/runner/work/iac-labs/iac-labs/example-app/.venv
         key: ${{ runner.os }}-venv
     - name: Sec Test
-      run : |
-        poetry run test security
+      run: poetry run test security
+
   test:
     needs: [sec_test, lint, formatter]
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     defaults:
       run:
+        shell: bash
         working-directory: ./example-app
 
     steps:
@@ -108,7 +141,6 @@ jobs:
     - name: Install Poetry
       uses: snok/install-poetry@v1
     - name: Recover build venv
-      id: cached-poetry-dependecies
       uses: actions/cache@v3
       with:
         path: /home/runner/work/iac-labs/iac-labs/example-app/.venv
