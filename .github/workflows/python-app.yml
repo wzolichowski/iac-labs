@@ -92,7 +92,7 @@ jobs:
         path: /home/runner/work/iac-labs/iac-labs/example-app/.venv
         key: ${{ runner.os }}-venv
     - name: Formatter
-      run: poetry run task formatter
+      run: poetry run test formatter
 
   sec_test:
     needs: build
