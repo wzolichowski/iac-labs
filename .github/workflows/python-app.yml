@@ -38,8 +38,8 @@ jobs:
       uses: actions/cache@v3
       with:
         path: |
-          ${{ runner.os == 'Windows' && 'C:\\Users\\runneradmin\\AppData\\Local\\pypoetry\\Cache\\virtualenvs' || '/home/runner/work/iac-labs/iac-labs/example-app/.venv' }}
-        key: ${{ runner.os }}-venv-${{ hashFiles('**/poetry.lock') }}
+          ${{ runner.os == 'Windows' && 'C:\Users\runneradmin\AppData\Local\pypoetry\Cache\virtualenvs' || '/home/runner/work/iac-labs/iac-labs/example-app/.venv' }}
+        key: ${{ runner.os }}
 
 
 
